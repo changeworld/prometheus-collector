@@ -82,7 +82,7 @@ def UpdateScrapeIntervalConfig(yamlConfigFile, scrapeIntervalSetting)
     config = YAML.load(File.read(yamlConfigFile))
     scrapeIntervalConfig = scrapeIntervalSetting
 
-    # Iterate through each scrape config and update scrape interval config 
+    # Iterate through each scrape config and update scrape interval config
     if !config.nil?
       scrapeConfigs = config["scrape_configs"]
       if !scrapeConfigs.nil? && !scrapeConfigs.empty?
@@ -320,8 +320,9 @@ def populateDefaultPrometheusConfig
         defaultConfigs.push(@windowsexporterDefaultDsFile)
 
         # If advanced mode and windows daemonset are enabled, only the up metric is needed from the replicaset
-      elsif currentControllerType == @replicasetControllerType && advancedMode == true && windowsDaemonset == true && @sendDSUpMetric == true && ENV["OS_TYPE"].downcase == "linux"
+      elsif currentControllerType == @replicasetControllerType && advancedMode == true && windowsDaemonset == true && ENV["OS_TYPE"].downcase == "linux"
         UpdateScrapeIntervalConfig(@windowsexporterDefaultRsAdvancedFile, windowsexporterScrapeInterval)
+        AppendMetricRelabelConfig(@windowsexporterDefaultRsAdvancedFile, winexporterMetricsKeepListRegex)
         defaultConfigs.push(@windowsexporterDefaultRsAdvancedFile)
 
         # If advanced mode is enabled, but not the windows daemonset, scrape windows kubelet from the replicaset as if it's simple mode
@@ -359,8 +360,9 @@ def populateDefaultPrometheusConfig
         defaultConfigs.push(@windowskubeproxyDefaultDsFile)
 
       # If advanced mode and windows daemonset are enabled, only the up metric is needed from the replicaset
-      elsif currentControllerType == @replicasetControllerType && advancedMode == true && windowsDaemonset == true && @sendDSUpMetric == true && ENV["OS_TYPE"].downcase == "linux"
+      elsif currentControllerType == @replicasetControllerType && advancedMode == true && windowsDaemonset == true && ENV["OS_TYPE"].downcase == "linux"
         UpdateScrapeIntervalConfig(@windowskubeproxyDefaultRsAdvancedFile, windowskubeproxyScrapeInterval)
+        AppendMetricRelabelConfig(@windowskubeproxyDefaultRsAdvancedFile, winkubeproxyMetricsKeepListRegex)
         defaultConfigs.push(@windowskubeproxyDefaultRsAdvancedFile)
 
         # If advanced mode is enabled, but not the windows daemonset, scrape windows kubelet from the replicaset as if it's simple mode
