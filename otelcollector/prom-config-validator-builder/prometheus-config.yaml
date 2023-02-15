@@ -49,7 +49,7 @@ scrape_configs:
     action: replace
     target_label: __address__
     regex: (.+?)(\:\d+)?
-    replacement: $$1:9182
+    replacement: $$1:19182
 - job_name: prometheus_ref_app
   scheme: http
   follow_redirects: true
@@ -65,7 +65,7 @@ scrape_configs:
       target_label: location
       replacement: $1
       action: replace
-  # Below is to test $ in regex field to mean endswith and $$(backward compatibility) in replacement for regex grouping. Validator should work for both 
+  # Below is to test $ in regex field to mean endswith and $$(backward compatibility) in replacement for regex grouping. Validator should work for both
   metric_relabel_configs:
     - action: replace
       source_labels: [city]
@@ -86,4 +86,3 @@ scrape_configs:
   # Uncomment below to make sure validator fails since the file doesnt exist
   # file_sd_configs:
   # - files: ["dummy-sd-config.json"]
-  
