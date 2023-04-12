@@ -56,7 +56,7 @@ AzureMonitorMetrics:
     customResourceEndpoint: ""
 global:
   commonGlobals:
-    CloudEnvironment: "azurepubliccloud"
+    CloudEnvironment: "AZUREPUBLICCLOUD"
     Region: "${AKS_REGION}"
     Customer:
       AzureResourceID: ${AKS_RESOURCE_ID}
