@@ -6,7 +6,11 @@ function Set-EnvironmentVariablesAndConfigParser {
     $windowsVersion = (Get-WmiObject -class Win32_OperatingSystem).Caption
     [System.Environment]::SetEnvironmentVariable("windowsVersion", $windowsVersion, "Process")
     [System.Environment]::SetEnvironmentVariable("windowsVersion", $windowsVersion, "Machine")
-
+    
+    # Set spin to 0 so that the start up script gets processed immediately
+    [System.Environment]::SetEnvironmentVariable("COMPlus_ThreadPool_UnfairSemaphoreSpinLimit", 0, "Process")
+    [System.Environment]::SetEnvironmentVariable("COMPlus_ThreadPool_UnfairSemaphoreSpinLimit", 0, "Machine")
+    
     #resourceid override.
     if ([string]::IsNullOrEmpty($env:MAC)) {
         if ([string]::IsNullOrEmpty($env:CLUSTER)) {
