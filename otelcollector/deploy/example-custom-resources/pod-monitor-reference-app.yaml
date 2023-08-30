@@ -3,9 +3,6 @@ kind: PodMonitor
 metadata:
   name: prometheus-reference-app-job
 spec:
-  labelLimit: 63
-  labelNameLengthLimit: 511
-  labelValueLengthLimit: 1023
   selector:
     matchLabels:
       app: prometheus-reference-app
