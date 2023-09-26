@@ -311,7 +311,7 @@ spec:
               cpu: 500m
               memory: 1Gi
             requests:
-              cpu: 150m
+              cpu: 50m
               memory: 500Mi
           env:
             - name: CLUSTER
