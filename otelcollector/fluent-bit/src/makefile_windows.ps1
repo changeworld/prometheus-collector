@@ -10,6 +10,4 @@ Write-Output "========================= Building  out_appinsights plugin go code
 Write-Output "========================= go get  ========================="
 go get
 Write-Output "========================= go build  ========================="
-go install golang.org/dl/go1.20rc1@latest
-go1.20rc1 download
 go build -buildmode=c-shared -o out_appinsights.so .
