@@ -2,6 +2,7 @@ trigger:
   branches:
     include:
     - main
+    - kaveesh/test
 pr:
   autoCancel: true
   branches:
@@ -235,7 +236,7 @@ jobs:
     - task: GoTool@0
       displayName: "Build: specify golang version"
       inputs:
-        version: '1.19'
+        version: '1.20'
 
     - bash: |
         sudo apt-get install build-essential -y
@@ -423,7 +424,7 @@ jobs:
     - task: GoTool@0
       displayName: "Build: specify golang version"
       inputs:
-        version: '1.19'
+        version: '1.20'
 
     - powershell: |
         ./makefile_windows.ps1
@@ -461,7 +462,7 @@ jobs:
     - task: GoTool@0
       displayName: "Build: specify golang version"
       inputs:
-        version: '1.19'
+        version: '1.20'
 
     - powershell: |
         ./makefile_windows.ps1
@@ -504,7 +505,7 @@ jobs:
     - task: GoTool@0
       displayName: "Build: specify golang version"
       inputs:
-        version: '1.19'
+        version: '1.20'
 
     - powershell: |
         New-Item -Path "$(Build.ArtifactStagingDirectory)" -Name "windows" -ItemType "directory"
