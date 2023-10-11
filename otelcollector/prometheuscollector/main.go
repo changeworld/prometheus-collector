@@ -85,11 +85,11 @@ func main() {
 	fmt.Println("Waiting for 30s for MDSD to get the config and put them in place for ME")
 	time.Sleep(30 * time.Second)
 	
-	fmt.Println("Reading me config file as a string for configOverrides parameter")
-	meConfigString := readMeConfigFileAsString(meConfigFile)
+	// fmt.Println("Reading me config file as a string for configOverrides parameter")
+	// meConfigString := readMeConfigFileAsString(meConfigFile)
 	
 	fmt.Println("Starting metricsextension with config overrides")
-	startMetricsExtensionWithConfigOverrides(meConfigString)
+	startMetricsExtensionWithConfigOverrides(meConfigFile)
 
     // Get ME version
 	meVersion, err := readVersionFile("/opt/metricsextversion.txt")
@@ -238,11 +238,11 @@ func readEnvVarsFromEnvMdsdFile(envMdsdFile string) ([]string, error) {
 func startMdsd() {
 	fmt.Println("Setting env variables from envmdsd file for MDSD")
 	// Read environment variables from the envmdsd file
-	envVarsFromEnvMdsd, err := readEnvVarsFromEnvMdsdFile("/etc/mdsd.d/envmdsd")
-	if err != nil {
-		fmt.Printf("Error reading envmdsd file: %v\n", err)
-		return
-	}
+	// envVarsFromEnvMdsd, err := readEnvVarsFromEnvMdsdFile("/etc/mdsd.d/envmdsd")
+	// if err != nil {
+	// 	fmt.Printf("Error reading envmdsd file: %v\n", err)
+	// 	return
+	// }
 
 	cmd := exec.Command(
 		"mdsd",
@@ -253,10 +253,10 @@ func startMdsd() {
 		"-q", "/opt/microsoft/linuxmonagent/mdsd.qos",
 	)
 	// Set the environment variables in cmd.Env
-	cmd.Env = append(os.Environ(), envVarsFromEnvMdsd...)
+	// cmd.Env = append(os.Environ(), envVarsFromEnvMdsd...)
 
-	fmt.Println("cmd.Env for MDSD")
-	fmt.Println(cmd.Env)
+	// fmt.Println("cmd.Env for MDSD")
+	// fmt.Println(cmd.Env)
 	err = cmd.Start()
 	if err != nil {
 		fmt.Printf("Error starting MDSD: %v\n", err)
@@ -282,7 +282,7 @@ func readMeConfigFileAsString(meConfigFile string) string {
 	return string(content)
 }
 
-func startMetricsExtensionWithConfigOverrides(configOverrides string) {
+func startMetricsExtensionWithConfigOverrides(configOverridesFile string) {
 	cmd := exec.Command(
 		"/usr/sbin/MetricsExtension",
 		"-Logger", "File",
@@ -291,7 +291,7 @@ func startMetricsExtensionWithConfigOverrides(configOverrides string) {
 		"-TokenSource", "AMCS",
 		"-DataDirectory", "/etc/mdsd.d/config-cache/metricsextension",
 		"-Input", "otlp_grpc_prom",
-		"-ConfigOverrides", configOverrides,
+		"-ConfigOverridesFilePath", configOverridesFile,
 	)
 	cmd.Env = os.Environ()
 	cmd.Env = append(cmd.Env, "customResourceId=" + os.Getenv("CLUSTER"))

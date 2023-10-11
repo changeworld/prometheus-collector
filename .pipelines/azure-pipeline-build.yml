@@ -2,7 +2,7 @@ trigger:
   branches:
     include:
     - main
-    - kaveesh/shell_removal_from_ta_branch
+    - kaveesh/temp_test_shell
 
 pr:
   autoCancel: true
